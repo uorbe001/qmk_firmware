@@ -87,27 +87,6 @@ void space_reset (qk_tap_dance_state_t *state, void *user_data) {
   xtap_state.state = 0;
 }
 
-void ctrl_esc_finished (qk_tap_dance_state_t *state, void *user_data) {
-  xtap_state.state = cur_dance(state);
-  switch (xtap_state.state) {
-    case SINGLE_TAP: register_code(KC_ESCAPE); break;
-    case SINGLE_HOLD: register_code(KC_LCTRL); break;
-    case DOUBLE_SINGLE_TAP: register_code(KC_ESCAPE); unregister_code(KC_ESCAPE); register_code(KC_ESCAPE);
-    //Last case is for fast typing. Assuming your key is `f`:
-    //For example, when typing the word `buffer`, and you want to make sure that you send `ff` and not `Esc`.
-    //In order to type `ff` when typing fast, the next character will have to be hit within the `TAPPING_TERM`, which by default is 200ms.
-  }
-}
-
-void ctrl_esc_reset (qk_tap_dance_state_t *state, void *user_data) {
-  switch (xtap_state.state) {
-    case SINGLE_TAP: unregister_code(KC_ESCAPE); break;
-    case SINGLE_HOLD: unregister_code(KC_LCTRL); break;
-    case DOUBLE_SINGLE_TAP: unregister_code(KC_ESCAPE);
-  }
-  xtap_state.state = 0;
-}
-
 void brackets_finished (qk_tap_dance_state_t *state, void *user_data) {
   xtap_state.state = cur_dance(state);
   switch (xtap_state.state) {
@@ -131,6 +110,5 @@ void brackets_reset (qk_tap_dance_state_t *state, void *user_data) {
 
 qk_tap_dance_action_t tap_dance_actions[] = {
   [SPACE_CTL]     = ACTION_TAP_DANCE_FN_ADVANCED(NULL,space_finished, space_reset),
-  [CTRL_ESC]     = ACTION_TAP_DANCE_FN_ADVANCED(NULL,ctrl_esc_finished, ctrl_esc_reset),
   [BRACKETS]     = ACTION_TAP_DANCE_FN_ADVANCED(NULL,brackets_finished, brackets_reset)
 };

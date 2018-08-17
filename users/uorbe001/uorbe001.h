@@ -21,8 +21,7 @@ enum {
 //Tap dance enums
 enum {
   SPACE_CTL = 0,
-  CTRL_ESC = 1,
-  BRACKETS = 2
+  BRACKETS = 1
 };
 
 int cur_dance (qk_tap_dance_state_t *state);
@@ -30,9 +29,6 @@ int cur_dance (qk_tap_dance_state_t *state);
 //for the x tap dance. Put it here so it can be used in any keymap
 void space_finished (qk_tap_dance_state_t *state, void *user_data);
 void space_reset (qk_tap_dance_state_t *state, void *user_data);
-
-void ctrl_esc_finished (qk_tap_dance_state_t *state, void *user_data);
-void ctrl_esc_reset (qk_tap_dance_state_t *state, void *user_data);
 
 void brackets_finished (qk_tap_dance_state_t *state, void *user_data);
 void brackets_reset (qk_tap_dance_state_t *state, void *user_data);

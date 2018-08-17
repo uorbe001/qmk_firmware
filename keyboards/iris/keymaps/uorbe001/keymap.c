@@ -19,6 +19,7 @@ enum custom_keycodes {
 #define MAGIC_F LT(_FUNC_LAYER, KC_F)
 #define MAGIC_D LT(_NUM_LAYER, KC_D)
 #define MAGIC_S LT(_MM_LAYER, KC_S)
+#define CTL_ESC CTL_T(KC_ESCAPE)
 
 const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
   // TODO KC_BSLASH
@@ -35,7 +36,7 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
   //├────────┼────────┼────────┼────────┼────────┼────────┼────────┐        ┌────────┼────────┼────────┼────────┼────────┼────────┼────────┤
      KC_EQUAL, KC_Z,    KC_X,    KC_C,    KC_V,    KC_B, TD(SPACE_CTL),    TD(SPACE_CTL), KC_N, KC_M,   KC_COMM, KC_DOT,  KC_SLSH, KC_NO,
   //└────────┴────────┴────────┴───┬────┴───┬────┴───┬────┴───┬────┘        └───┬────┴───┬────┴───┬────┴───┬────┴────────┴────────┴────────┘
-                                   KC_LSPO,TD(CTRL_ESC),TD(SPACE_CTL),     TD(SPACE_CTL),TD(CTRL_ESC),KC_RSPC
+                                   KC_LSPO,  CTL_ESC, TD(SPACE_CTL),          TD(SPACE_CTL),CTL_ESC,KC_RSPC
                                 // └────────┴────────┴────────┘                 └────────┴────────┴────────┘
   ),
 
