@@ -4,19 +4,19 @@
 extern keymap_config_t keymap_config;
 
 #define _QWERTY 0
-#define _FUNC_LAYER 1
 #define _NUM_LAYER 2
 #define _MM_LAYER 16
-#define _MOUSE_LAYER 18
+#define _MOUSE_LAYER 20
+#define _FUNC_LAYER 31
 
-enum custom_keycodes {
-  QWERTY = SAFE_RANGE,
+/* enum custom_keycodes { */
+/*   QWERTY = SAFE_RANGE, */
   /* FUNC_LAYER, */
   /* NUM_LAYER, */
   /* MM_LAYER, */
   /* MOUSE_LAYER, */
   /* ADJUST, */
-};
+/* }; */
 
 #define MAGIC_F LT(_FUNC_LAYER, KC_F)
 #define MAGIC_D LT(_NUM_LAYER, KC_D)
@@ -25,7 +25,6 @@ enum custom_keycodes {
 #define CTL_ESC CTL_T(KC_ESCAPE)
 
 const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
-  // TODO KC_BSLASH
   // TODO macros for tildes & n?
 
   [_QWERTY] = LAYOUT(
@@ -36,7 +35,7 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
   //├────────┼────────┼────────┼────────┼────────┼────────┤                          ├────────┼────────┼────────┼────────┼────────┼────────┤
      KC_MINUS, KC_A,    MAGIC_S, MAGIC_D, MAGIC_F, KC_G,                              KC_H,    KC_J,    KC_K,    KC_L,    KC_SCLN, KC_QUOT,
   //├────────┼────────┼────────┼────────┼────────┼────────┼────────┐        ┌────────┼────────┼────────┼────────┼────────┼────────┼────────┤
-     KC_EQUAL, KC_Z,    KC_X,    KC_C,    KC_V,    KC_B, TD(SPACE_CTL),    TD(SPACE_CTL), KC_N, KC_M,   KC_COMM, KC_DOT,  KC_SLSH, KC_NO,
+     KC_EQUAL, KC_Z,    KC_X,    KC_C,    KC_V,    KC_B, TD(SPACE_CTL),    TD(SPACE_CTL), KC_N, KC_M,   KC_COMM, KC_DOT,  KC_SLSH, KC_BSLASH,
   //└────────┴────────┴────────┴───┬────┴───┬────┴───┬────┴───┬────┘        └───┬────┴───┬────┴───┬────┴───┬────┴────────┴────────┴────────┘
                                    KC_LSPO,  CTL_ESC, TD(SPACE_CTL),          TD(SPACE_CTL),CTL_ESC,KC_RSPC
                                 // └────────┴────────┴────────┘                 └────────┴────────┴────────┘
@@ -113,14 +112,14 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
   /* ), */
 };
 
-bool process_record_user(uint16_t keycode, keyrecord_t *record) {
-  switch (keycode) {
-    case QWERTY:
-      if (record->event.pressed) {
-        set_single_persistent_default_layer(_QWERTY);
-      }
-      return false;
-      break;
+/* bool process_record_user(uint16_t keycode, keyrecord_t *record) { */
+/*   switch (keycode) { */
+/*     case QWERTY: */
+/*       if (record->event.pressed) { */
+/*         set_single_persistent_default_layer(_QWERTY); */
+/*       } */
+/*       return false; */
+/*       break; */
     /* case LOWER: */
     /*   if (record->event.pressed) { */
     /*     layer_on(_LOWER); */
@@ -149,6 +148,6 @@ bool process_record_user(uint16_t keycode, keyrecord_t *record) {
     /*   } */
     /*   return false; */
     /*   break; */
-  }
-  return true;
-}
+  /* } */
+  /* return true; */
+/* } */
