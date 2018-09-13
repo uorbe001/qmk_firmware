@@ -3,29 +3,25 @@
 
 extern keymap_config_t keymap_config;
 
-#define _QWERTY 0
-#define _NUM_LAYER 3
-#define _MM_LAYER 16
-#define _MOUSE_LAYER 20
-#define _FUNC_LAYER 31
+#define SAFE_RANGE 0
 
-/* enum custom_keycodes { */
-/*   QWERTY = SAFE_RANGE, */
-  /* FUNC_LAYER, */
-  /* NUM_LAYER, */
-  /* MM_LAYER, */
-  /* MOUSE_LAYER, */
-  /* ADJUST, */
-/* }; */
+enum custom_keycodes {
+  QWERTY = SAFE_RANGE,
+  NUM_LAYER,
+  MM_LAYER,
+  FUNC_LAYER,
+  MOUSE_LAYER,
+  ADJUST,
+};
 
-#define MAGIC_F LT(_FUNC_LAYER, KC_F)
-#define MAGIC_D LT(_NUM_LAYER, KC_D)
-#define MAGIC_S LT(_MM_LAYER, KC_S)
-#define MAGIC_A LT(_MOUSE_LAYER, KC_A)
+#define MAGIC_F LT(FUNC_LAYER, KC_F)
+#define MAGIC_D LT(NUM_LAYER, KC_D)
+#define MAGIC_S LT(MM_LAYER, KC_S)
+#define MAGIC_A LT(MOUSE_LAYER, KC_A)
 #define CTL_ESC CTL_T(KC_ESCAPE)
 
 const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
-  [_QWERTY] = LAYOUT(
+  [QWERTY] = LAYOUT(
   //┌────────┬────────┬────────┬────────┬────────┬────────┐                          ┌────────┬────────┬────────┬────────┬────────┬────────┐
  TD(SUPER_GRAVE),KC_1, KC_2,    KC_3,    KC_4,    KC_5,                               KC_6,    KC_7,    KC_8,    KC_9,    KC_0,   KC_BSPC,
   //├────────┼────────┼────────┼────────┼────────┼────────┤                          ├────────┼────────┼────────┼────────┼────────┼────────┤
@@ -39,7 +35,7 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
                                 // └────────┴────────┴────────┘                 └────────┴────────┴────────┘
   ),
 
-  [_FUNC_LAYER] = LAYOUT(
+  [FUNC_LAYER] = LAYOUT(
   //┌────────┬────────┬────────┬────────┬────────┬────────┐                          ┌────────┬────────┬────────┬────────┬────────┬────────┐
      KC_F12,   KC_F1,   KC_F2,   KC_F3,   KC_F4,   KC_F5,                              KC_F6,   KC_F7,   KC_F8,   KC_F9,   KC_F10,   KC_F11,
   //├────────┼────────┼────────┼────────┼────────┼────────┤                          ├────────┼────────┼────────┼────────┼────────┼────────┤
@@ -53,7 +49,7 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
                                 // └────────┴────────┴────────┘                 └────────┴────────┴────────┘
   ),
 
-  [_NUM_LAYER] = LAYOUT(
+  [NUM_LAYER] = LAYOUT(
   //┌────────┬────────┬────────┬────────┬────────┬────────┐                          ┌────────┬────────┬────────┬────────┬────────┬────────┐
      _______, _______, _______, _______, _______, _______,                         _______, _______,KC_KP_ASTERISK,KC_KP_SLASH, KC_KP_MINUS, _______,
   //├────────┼────────┼────────┼────────┼────────┼────────┤                          ├────────┼────────┼────────┼────────┼────────┼────────┤
@@ -67,7 +63,7 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
                                 // └────────┴────────┴────────┘                 └────────┴────────┴────────┘
   ),
 
-  [_MM_LAYER] = LAYOUT(
+  [MM_LAYER] = LAYOUT(
   //┌────────┬────────┬────────┬────────┬────────┬────────┐                          ┌────────┬────────┬────────┬────────┬────────┬────────┐
      _______, _______, _______, _______, _______, _______,                            _______, _______, _______, _______, _______, _______,
   //├────────┼────────┼────────┼────────┼────────┼────────┤                          ├────────┼────────┼────────┼────────┼────────┼────────┤
@@ -81,7 +77,7 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
                                 // └────────┴────────┴────────┘                 └────────┴────────┴────────┘
   ),
 
-  [_MOUSE_LAYER] = LAYOUT(
+  [MOUSE_LAYER] = LAYOUT(
   //┌────────┬────────┬────────┬────────┬────────┬────────┐                          ┌────────┬────────┬────────┬────────┬────────┬────────┐
      _______, _______, _______, _______, _______, _______,                            _______, _______, _______, _______, _______, _______,
   //├────────┼────────┼────────┼────────┼────────┼────────┤                          ├────────┼────────┼────────┼────────┼────────┼────────┤
