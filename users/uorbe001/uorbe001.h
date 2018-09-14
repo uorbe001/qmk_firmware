@@ -3,7 +3,7 @@
 #include QMK_KEYBOARD_H
 #include "process_keycode/process_tap_dance.h"
 
-#define _ACCENTS_LAYER 2
+#define _ACCENTS_LAYER 16
 
 typedef struct {
   bool is_press_action;
