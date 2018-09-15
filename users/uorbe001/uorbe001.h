@@ -3,8 +3,6 @@
 #include QMK_KEYBOARD_H
 #include "process_keycode/process_tap_dance.h"
 
-#define _ACCENTS_LAYER 16
-
 typedef struct {
   bool is_press_action;
   int state;
@@ -23,8 +21,7 @@ enum {
 //Tap dance enums
 enum {
   SPACE_CTL = 0,
-  BRACKETS = 1,
-  SUPER_GRAVE = 2
+  BRACKETS = 1
 };
 
 int cur_dance (qk_tap_dance_state_t *state);
@@ -36,5 +33,3 @@ void space_reset (qk_tap_dance_state_t *state, void *user_data);
 void brackets_finished (qk_tap_dance_state_t *state, void *user_data);
 void brackets_reset (qk_tap_dance_state_t *state, void *user_data);
 
-void super_grave_finished (qk_tap_dance_state_t *state, void *user_data);
-void super_grave_reset (qk_tap_dance_state_t *state, void *user_data);
