@@ -123,9 +123,13 @@ void super_grave_finished (qk_tap_dance_state_t *state, void *user_data) {
             set_oneshot_layer(_ACCENTS_LAYER, ONESHOT_START);
             oneshot_tapdance_active = true;
         }
-       register_code(KC_RBRACKET);
        break;
-    case DOUBLE_SINGLE_TAP: register_code(KC_GRAVE); unregister_code(KC_GRAVE); register_code(KC_GRAVE);
+    case DOUBLE_SINGLE_TAP:
+       register_code(KC_GRAVE);
+       unregister_code(KC_GRAVE);
+       register_code(KC_GRAVE);
+       clear_oneshot_layer_state(ONESHOT_PRESSED);
+       oneshot_tapdance_active = false;
     //Last case is for fast typing. Assuming your key is `f`:
     //For example, when typing the word `buffer`, and you want to make sure that you send `ff` and not `Esc`.
     //In order to type `ff` when typing fast, the next character will have to be hit within the `TAPPING_TERM`, which by default is 200ms.
@@ -135,7 +139,10 @@ void super_grave_finished (qk_tap_dance_state_t *state, void *user_data) {
 void super_grave_reset (qk_tap_dance_state_t *state, void *user_data) {
   switch (xtap_state.state) {
     case SINGLE_TAP: unregister_code(KC_GRAVE); break;
-    case DOUBLE_TAP: clear_oneshot_layer_state(ONESHOT_PRESSED); break;
+    case DOUBLE_TAP:
+      oneshot_tapdance_active = false;
+      clear_oneshot_layer_state(ONESHOT_PRESSED);
+      break;
     case DOUBLE_SINGLE_TAP: unregister_code(KC_GRAVE);
   }
   xtap_state.state = 0;
