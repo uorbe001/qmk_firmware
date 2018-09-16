@@ -3,8 +3,27 @@
 
 extern keymap_config_t keymap_config;
 
-enum custom_keycode {
-  ACCENTS
+#define UC_TILDE_LOWER_A 0x00e1
+#define UC_TILDE_UPPER_A 0x00c1
+#define UC_TILDE_LOWER_E 0x00e9
+#define UC_TILDE_UPPER_E 0x00c9
+#define UC_TILDE_LOWER_I 0x00ed
+#define UC_TILDE_UPPER_I 0x00cd
+#define UC_TILDE_LOWER_O 0x00d3
+#define UC_TILDE_UPPER_O 0x00f3
+#define UC_TILDE_LOWER_U 0x00fa
+#define UC_TILDE_UPPER_U 0x00da
+#define UC_TILDE_LOWER_N 0x00d1
+#define UC_TILDE_UPPER_N 0x00f1
+
+enum custom_keycodes {
+  ACCENTS = SAFE_RANGE,
+  TILDE_A,
+  TILDE_E,
+  TILDE_I,
+  TILDE_O,
+  TILDE_U,
+  TILDE_N
 };
 
 enum layers {
@@ -98,11 +117,11 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
   //┌────────┬────────┬────────┬────────┬────────┬────────┐                          ┌────────┬────────┬────────┬────────┬────────┬────────┐
      KC_GRAVE, _______, _______, _______, _______, _______,                            _______, _______, _______, _______, _______, _______,
   //├────────┼────────┼────────┼────────┼────────┼────────┤                          ├────────┼────────┼────────┼────────┼────────┼────────┤
-     _______, _______, _______, UC(0x00e9), _______, _______,                         _______,UC(0x00fa),UC(0x00ed),UC(0x00f3), _______, _______,
+     _______, _______, _______, TILDE_E, _______, _______,                         _______,TILDE_U,TILDE_I,TILDE_O, _______, _______,
   //├────────┼────────┼────────┼────────┼────────┼────────┤                          ├────────┼────────┼────────┼────────┼────────┼────────┤
-     _______, UC(0x00e1), _______, _______, _______, _______,                            _______, _______, _______, _______, _______, _______,
+     _______, TILDE_A, _______, _______, _______, _______,                            _______, _______, _______, _______, _______, _______,
   //├────────┼────────┼────────┼────────┼────────┼────────┼────────┐        ┌────────┼────────┼────────┼────────┼────────┼────────┼────────┤
-     _______, _______, _______, _______, _______, _______, _______,          _______, UC(0x00f1), _______, _______, _______, _______, _______,
+     _______, _______, _______, _______, _______, _______, _______,          _______, TILDE_N, _______, _______, _______, _______, _______,
   //└────────┴────────┴────────┴───┬────┴───┬────┴───┬────┴───┬────┘        └───┬────┴───┬────┴───┬────┴───┬────┴────────┴────────┴────────┘
                                     _______, _______, _______,                   _______, _______, _______
                                 // └────────┴────────┴────────┘                 └────────┴────────┴────────┘
@@ -113,10 +132,39 @@ void matrix_init_user(void) {
     set_unicode_input_mode(UC_OSX); // REPLACE UC_XXXX with the Unicode Input Mode for your OS. See table below.
 };
 
+bool send_shifty_unicode (uint16_t regular, uint16_t shifted) {
+  bool is_capital = ( keyboard_report->mods & (MOD_BIT(KC_LSFT) |MOD_BIT(KC_RSFT)) );
+
+  unicode_input_start();
+  register_hex(is_capital ? shifted : regular);
+  unicode_input_finish();
+  return false;
+}
+
+bool process_shifty_unicode (keyrecord_t *record, uint16_t regular, uint16_t shifted) {
+  if (!record->event.pressed) {
+    return send_shifty_unicode(regular, shifted);
+  }
+
+  return true;
+}
+
 bool accents_layer_on = false;
 
 bool process_record_user(uint16_t keycode, keyrecord_t *record) {
   switch (keycode) {
+    case TILDE_A:
+      return process_shifty_unicode(record, UC_TILDE_LOWER_A, UC_TILDE_UPPER_A);
+    case TILDE_E:
+      return process_shifty_unicode(record, UC_TILDE_LOWER_E, UC_TILDE_UPPER_E);
+    case TILDE_I:
+      return process_shifty_unicode(record, UC_TILDE_LOWER_I, UC_TILDE_UPPER_I);
+    case TILDE_U:
+      return process_shifty_unicode(record, UC_TILDE_LOWER_U, UC_TILDE_UPPER_U);
+    case TILDE_O:
+      return process_shifty_unicode(record, UC_TILDE_UPPER_O, UC_TILDE_LOWER_O);
+    case TILDE_N:
+      return process_shifty_unicode(record, UC_TILDE_UPPER_N, UC_TILDE_LOWER_N);
     case ACCENTS:
       if (!record->event.pressed) {
         // Do something else when release
