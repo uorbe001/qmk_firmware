@@ -3,6 +3,10 @@
 
 extern keymap_config_t keymap_config;
 
+enum custom_keycode {
+  ACCENTS
+};
+
 enum layers {
   QWERTY,
   MM_LAYER,
@@ -17,7 +21,7 @@ enum layers {
 #define MAGIC_S LT(MM_LAYER, KC_S)
 #define MAGIC_A LT(MOUSE_LAYER, KC_A)
 #define CTL_ESC CTL_T(KC_ESCAPE)
-#define ACCENTS OSL(ACCENTS_LAYER)
+/* #define ACCENTS OSL(ACCENTS_LAYER) */
 
 const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
   [QWERTY] = LAYOUT(
@@ -92,7 +96,7 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
 
   [ACCENTS_LAYER] = LAYOUT(
   //┌────────┬────────┬────────┬────────┬────────┬────────┐                          ┌────────┬────────┬────────┬────────┬────────┬────────┐
-     _______, _______, _______, _______, _______, _______,                            _______, _______, _______, _______, _______, _______,
+     KC_GRAVE, _______, _______, _______, _______, _______,                            _______, _______, _______, _______, _______, _______,
   //├────────┼────────┼────────┼────────┼────────┼────────┤                          ├────────┼────────┼────────┼────────┼────────┼────────┤
      _______, _______, _______, UC(0x00e9), _______, _______,                         _______,UC(0x00fa),UC(0x00ed),UC(0x00f3), _______, _______,
   //├────────┼────────┼────────┼────────┼────────┼────────┤                          ├────────┼────────┼────────┼────────┼────────┼────────┤
@@ -100,7 +104,7 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
   //├────────┼────────┼────────┼────────┼────────┼────────┼────────┐        ┌────────┼────────┼────────┼────────┼────────┼────────┼────────┤
      _______, _______, _______, _______, _______, _______, _______,          _______, UC(0x00f1), _______, _______, _______, _______, _______,
   //└────────┴────────┴────────┴───┬────┴───┬────┴───┬────┴───┬────┘        └───┬────┴───┬────┴───┬────┴───┬────┴────────┴────────┴────────┘
-                                    _______, KC_GRAVE, _______,                   _______, KC_GRAVE, _______
+                                    _______, _______, _______,                   _______, _______, _______
                                 // └────────┴────────┴────────┘                 └────────┴────────┴────────┘
   )
 };
@@ -108,3 +112,25 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
 void matrix_init_user(void) {
     set_unicode_input_mode(UC_OSX); // REPLACE UC_XXXX with the Unicode Input Mode for your OS. See table below.
 };
+
+bool accents_layer_on = false;
+
+bool process_record_user(uint16_t keycode, keyrecord_t *record) {
+  switch (keycode) {
+    case ACCENTS:
+      if (!record->event.pressed) {
+        // Do something else when release
+        accents_layer_on = true;
+        layer_on(ACCENTS_LAYER);
+        set_oneshot_layer(ACCENTS_LAYER, ONESHOT_PRESSED);
+      }
+      return false; // Skip all further processing of this key
+    default:
+      if (accents_layer_on && !record->event.pressed) {
+        clear_oneshot_layer_state(ONESHOT_PRESSED);
+        accents_layer_on = false;
+      }
+
+      return true; // Process all other keycodes normally
+  }
+}
