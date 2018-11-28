@@ -21,7 +21,8 @@ enum {
 //Tap dance enums
 enum {
   SPACE_CTL = 0,
-  BRACKETS = 1
+  BRACKETS = 1,
+  SLASH = 2
 };
 
 int cur_dance (qk_tap_dance_state_t *state);
@@ -33,3 +34,5 @@ void space_reset (qk_tap_dance_state_t *state, void *user_data);
 void brackets_finished (qk_tap_dance_state_t *state, void *user_data);
 void brackets_reset (qk_tap_dance_state_t *state, void *user_data);
 
+void slash_finished (qk_tap_dance_state_t *state, void *user_data);
+void slash_reset (qk_tap_dance_state_t *state, void *user_data);
