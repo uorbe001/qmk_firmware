@@ -138,6 +138,16 @@ void matrix_init_user(void) {
     set_unicode_input_mode(UC_OSX); // REPLACE UC_XXXX with the Unicode Input Mode for your OS. See table below.
 };
 
+bool accents_layer_on = false;
+
+void disable_accents_layer (keyrecord_t *record) {
+    if (accents_layer_on && !record->event.pressed) {
+      clear_oneshot_layer_state(ONESHOT_PRESSED);
+      reset_oneshot_layer();
+      accents_layer_on = false;
+    }
+}
+
 bool send_shifty_unicode (uint16_t regular, uint16_t shifted) {
   bool is_capital = ( keyboard_report->mods & (MOD_BIT(KC_LSFT) |MOD_BIT(KC_RSFT)) );
 
@@ -148,14 +158,14 @@ bool send_shifty_unicode (uint16_t regular, uint16_t shifted) {
 }
 
 bool process_shifty_unicode (keyrecord_t *record, uint16_t regular, uint16_t shifted) {
+  disable_accents_layer(record);
+
   if (!record->event.pressed) {
     return send_shifty_unicode(regular, shifted);
   }
 
   return true;
 }
-
-bool accents_layer_on = false;
 
 bool process_record_user(uint16_t keycode, keyrecord_t *record) {
   switch (keycode) {
@@ -175,16 +185,11 @@ bool process_record_user(uint16_t keycode, keyrecord_t *record) {
       if (!record->event.pressed) {
         // Do something else when release
         accents_layer_on = true;
-        layer_on(ACCENTS_LAYER);
         set_oneshot_layer(ACCENTS_LAYER, ONESHOT_PRESSED);
       }
       return false; // Skip all further processing of this key
     default:
-      if (accents_layer_on && !record->event.pressed) {
-        clear_oneshot_layer_state(ONESHOT_PRESSED);
-        accents_layer_on = false;
-      }
-
+      disable_accents_layer(record);
       return true; // Process all other keycodes normally
   }
 }
