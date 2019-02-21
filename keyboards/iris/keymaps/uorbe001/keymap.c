@@ -57,9 +57,9 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
   //├────────┼────────┼────────┼────────┼────────┼────────┤                          ├────────┼────────┼────────┼────────┼────────┼────────┤
      CTL_ESC, MAGIC_A, MAGIC_S, MAGIC_D, MAGIC_F, KC_G,                              KC_H,    KC_J,    KC_K,    KC_L,    KC_SCLN, CMD_QUOT,
   //├────────┼────────┼────────┼────────┼────────┼────────┼────────┐        ┌────────┼────────┼────────┼────────┼────────┼────────┼────────┤
-     KC_LSPO, KC_Z,    KC_X,    KC_C,    KC_V,    KC_B, SPACE_LSHIFT,    SPACE_RSHIFT, KC_N, KC_M,   KC_COMM, KC_DOT,  TD(SLASH), KC_RSPC,
+     KC_LSPO, KC_Z,    KC_X,    KC_C,    KC_V,    KC_B, KC_SPACE,    KC_SPACE, KC_N, KC_M,   KC_COMM, KC_DOT,  TD(SLASH), KC_RSPC,
   //└────────┴────────┴────────┴───┬────┴───┬────┴───┬────┴───┬────┘        └───┬────┴───┬────┴───┬────┴───┬────┴────────┴────────┴────────┘
-                                    MINUS_ALT, ENT_CTL, SPACE_LSHIFT,          SPACE_RSHIFT,ENT_CTL,EQL_ALT
+                                    MINUS_ALT, ENT_CTL, KC_SPACE,          KC_SPACE,ENT_CTL,EQL_ALT
                                 // └────────┴────────┴────────┘                 └────────┴────────┴────────┘
   ),
 
