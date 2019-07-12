@@ -20,13 +20,13 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
 /* Use I2C or Serial, not both */
 
 /* #define USE_SERIAL */
-#define USE_I2C
+/* #define USE_I2C */
 
 /* Select hand configuration */
 
 /* #define MASTER_LEFT */
-#define MASTER_RIGHT
-// #define EE_HANDS
+/* #define MASTER_RIGHT */
+#define EE_HANDS
 
 #undef RGBLED_NUM
 #define RGBLIGHT_ANIMATIONS
@@ -35,7 +35,7 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
 #define RGBLIGHT_SAT_STEP 8
 #define RGBLIGHT_VAL_STEP 8
 
-#define TAPPING_TERM 250
+#define TAPPING_TERM 300
 /* #define RETRO_TAPPING */
 /* #define TAPPING_FORCE_HOLD */
 #define ONESHOT_TIMEOUT 300
