@@ -130,7 +130,8 @@ void slash_reset (qk_tap_dance_state_t *state, void *user_data) {
 }
 
 qk_tap_dance_action_t tap_dance_actions[] = {
-  [SPACE_CTL]     = ACTION_TAP_DANCE_FN_ADVANCED(NULL,space_finished, space_reset),
+  [SPACE_CTL]    = ACTION_TAP_DANCE_FN_ADVANCED(NULL,space_finished, space_reset),
   [BRACKETS]     = ACTION_TAP_DANCE_FN_ADVANCED(NULL,brackets_finished, brackets_reset),
-  [SLASH]     = ACTION_TAP_DANCE_FN_ADVANCED(NULL,slash_finished, slash_reset),
+  [INV_BRACKETS] = ACTION_TAP_DANCE_FN_ADVANCED(NULL,brackets_finished, brackets_reset),
+  [SLASH]        = ACTION_TAP_DANCE_FN_ADVANCED(NULL,slash_finished, slash_reset),
 };

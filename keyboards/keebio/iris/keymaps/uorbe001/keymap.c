@@ -16,6 +16,7 @@ extern keymap_config_t keymap_config;
 #define UC_TILDE_LOWER_N 0x00d1
 #define UC_TILDE_UPPER_N 0x00f1
 #define UC_EURO 0x20ac
+#define UC_IQ_MARK 0x00bf
 
 enum custom_keycodes {
   ACCENTS = SAFE_RANGE,
@@ -24,11 +25,22 @@ enum custom_keycodes {
   TILDE_I,
   TILDE_O,
   TILDE_U,
-  TILDE_N
+  TILDE_N,
+  INV_1,
+  INV_2,
+  INV_3,
+  INV_4,
+  INV_5,
+  INV_6,
+  INV_7,
+  INV_8,
+  INV_9,
+  INV_0
 };
 
 enum layers {
   QWERTY,
+  WORKMANP,
   MM_LAYER,
   NUM_LAYER,
   FUNC_LAYER,
@@ -37,7 +49,9 @@ enum layers {
 };
 
 #define MAGIC_F LT(FUNC_LAYER, KC_F)
+#define MAGIC_T LT(FUNC_LAYER, KC_T)
 #define MAGIC_D LT(NUM_LAYER, KC_D)
+#define MAGIC_H LT(NUM_LAYER, KC_H)
 #define MAGIC_S LT(MM_LAYER, KC_S)
 #define MAGIC_A LT(MOUSE_LAYER, KC_A)
 #define CTL_ESC CTL_T(KC_ESCAPE)
@@ -63,13 +77,27 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
                                 // └────────┴────────┴────────┘                 └────────┴────────┴────────┘
   ),
 
+  [WORKMANP] = LAYOUT(
+  //┌────────┬────────┬────────┬────────┬────────┬────────┐                          ┌────────┬────────┬────────┬────────┬────────┬────────┐
+     ACCENTS,  INV_1,    INV_2,  INV_3,   INV_4,    INV_5,                              INV_6,   INV_7,   INV_8,  INV_9,   INV_0,   KC_BSPC,
+  //├────────┼────────┼────────┼────────┼────────┼────────┤                          ├────────┼────────┼────────┼────────┼────────┼────────┤
+     KC_TAB,  KC_Q,    KC_D,    KC_R,    KC_W,    KC_B,                               KC_J,    KC_F,    KC_U,    KC_P,    KC_SCLN, TD(INV_BRACKETS),
+  //├────────┼────────┼────────┼────────┼────────┼────────┤                          ├────────┼────────┼────────┼────────┼────────┼────────┤
+     CTL_ESC, MAGIC_A, MAGIC_S, MAGIC_H, MAGIC_T, KC_G,                              KC_Y,    KC_N,    KC_E,    KC_O,    KC_I,    CMD_QUOT,
+  //├────────┼────────┼────────┼────────┼────────┼────────┼────────┐        ┌────────┼────────┼────────┼────────┼────────┼────────┼────────┤
+     KC_LSPO, KC_Z,    KC_X,    KC_M,    KC_C,    KC_V,    KC_SPACE,         KC_SPACE, KC_K,   KC_L,    KC_COMM, KC_DOT, TD(SLASH), KC_RSPC,
+  //└────────┴────────┴────────┴───┬────┴───┬────┴───┬────┴───┬────┘        └───┬────┴───┬────┴───┬────┴───┬────┴────────┴────────┴────────┘
+                                    MINUS_ALT, ENT_CTL, KC_SPACE,                KC_SPACE,ENT_CTL,EQL_ALT
+                                // └────────┴────────┴────────┘                 └────────┴────────┴────────┘
+  ),
+
   [FUNC_LAYER] = LAYOUT(
   //┌────────┬────────┬────────┬────────┬────────┬────────┐                          ┌────────┬────────┬────────┬────────┬────────┬────────┐
      KC_F12,   KC_F1,   KC_F2,   KC_F3,   KC_F4,   KC_F5,                              KC_F6,   KC_F7,   KC_F8,   KC_F9,   KC_F10,   KC_F11,
   //├────────┼────────┼────────┼────────┼────────┼────────┤                          ├────────┼────────┼────────┼────────┼────────┼────────┤
-     _______, _______, _______, _______, _______, _______,                            _______, _______, _______, _______, _______, _______,
+     _______, _______, _______, _______, _______, _______,                            _______, _______, _______, _______, _______, DF(WORKMANP),
   //├────────┼────────┼────────┼────────┼────────┼────────┤                          ├────────┼────────┼────────┼────────┼────────┼────────┤
-     _______, _______, _______, _______, _______, _______,                            KC_LEFT, KC_DOWN, KC_UP,   KC_RIGHT, _______, _______,
+     _______, _______, _______, _______, _______, _______,                            KC_LEFT, KC_DOWN, KC_UP,   KC_RIGHT, _______, DF(QWERTY),
   //├────────┼────────┼────────┼────────┼────────┼────────┼────────┐        ┌────────┼────────┼────────┼────────┼────────┼────────┼────────┤
      _______, _______, _______, _______, _______, _______, _______,          _______, _______, _______, _______, _______, _______, _______,
   //└────────┴────────┴────────┴───┬────┴───┬────┴───┬────┴───┬────┘        └───┬────┴───┬────┴───┬────┴───┬────┴────────┴────────┴────────┘
@@ -127,7 +155,7 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
   //├────────┼────────┼────────┼────────┼────────┼────────┤                          ├────────┼────────┼────────┼────────┼────────┼────────┤
      _______, TILDE_A, _______, _______, _______, _______,                            _______, _______, _______, _______, _______, _______,
   //├────────┼────────┼────────┼────────┼────────┼────────┼────────┐        ┌────────┼────────┼────────┼────────┼────────┼────────┼────────┤
-     _______, _______, _______, _______, _______, _______, _______,          _______, TILDE_N, _______, _______, _______, UC(0x00bf), _______,
+     _______, _______, _______, _______, _______, _______, _______,          _______, TILDE_N, _______, _______,_______,UC(UC_IQ_MARK),_______,
   //└────────┴────────┴────────┴───┬────┴───┬────┴───┬────┴───┬────┘        └───┬────┴───┬────┴───┬────┴───┬────┴────────┴────────┴────────┘
                                     _______, _______, _______,                   _______, _______, _______
                                 // └────────┴────────┴────────┘                 └────────┴────────┴────────┘
@@ -167,6 +195,39 @@ bool process_shifty_unicode (keyrecord_t *record, uint16_t regular, uint16_t shi
   return true;
 }
 
+bool invert_key(keyrecord_t* record, uint16_t target) {
+    const uint8_t shift = MOD_BIT(KC_LSFT) | MOD_BIT(KC_RSFT);
+
+    if (record->event.pressed) {
+        bool shift_pressed = keyboard_report->mods & shift;
+        bool l_shift_pressed = keyboard_report->mods & MOD_BIT(KC_LSFT);
+        bool r_shift_pressed = keyboard_report->mods & MOD_BIT(KC_RSFT);
+
+        if (shift_pressed) {
+            unregister_mods(shift);
+        } else {
+            register_mods(MOD_BIT(KC_LSFT));
+        }
+
+        register_code(target & 0xFF);
+        unregister_code(target & 0xFF);
+
+        if (!shift_pressed) {
+            unregister_mods(MOD_BIT(KC_LSFT));
+        }
+
+        if (r_shift_pressed) {
+            register_mods(MOD_BIT(KC_RSFT));
+        }
+
+        if (l_shift_pressed) {
+            register_mods(MOD_BIT(KC_LSFT));
+        }
+    }
+
+    return true;
+}
+
 bool process_record_user(uint16_t keycode, keyrecord_t *record) {
   switch (keycode) {
     case TILDE_A:
@@ -181,6 +242,26 @@ bool process_record_user(uint16_t keycode, keyrecord_t *record) {
       return process_shifty_unicode(record, UC_TILDE_UPPER_O, UC_TILDE_LOWER_O);
     case TILDE_N:
       return process_shifty_unicode(record, UC_TILDE_UPPER_N, UC_TILDE_LOWER_N);
+    case INV_1:
+      return invert_key(record, KC_1);
+    case INV_2:
+      return invert_key(record, KC_2);
+    case INV_3:
+      return invert_key(record, KC_3);
+    case INV_4:
+      return invert_key(record, KC_4);
+    case INV_5:
+      return invert_key(record, KC_5);
+    case INV_6:
+      return invert_key(record, KC_6);
+    case INV_7:
+      return invert_key(record, KC_7);
+    case INV_8:
+      return invert_key(record, KC_8);
+    case INV_9:
+      return invert_key(record, KC_9);
+    case INV_0:
+      return invert_key(record, KC_0);
     case ACCENTS:
       if (!record->event.pressed) {
         // Do something else when release
